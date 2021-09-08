@@ -1,0 +1,27 @@
+
+
+Centrala begrepp:
+
+Synchronous / Asynchronous
+
+Promise
+    - Pending
+    - Fulfilled
+        - Resolved
+        - Rejected
+
+API-Dokumentation, som berättar hur man ska formulera en förfrågan
+till en viss server (som har vissa resurser).
+
+new Request, som skapar en förfrågan om en viss resurs på internet
+
+Fetch, som returnerar en promise om en response
+    - ResponsePromise
+
+Response, kommunikationen med servern är på plats
+    - response innehåller info om huruvida förfrågan kommer att besvaras
+    - metod som returnerar promise om data (resursen): json()
+        (Det finns andra metoder om datan har annat format: text, blob)
+    - DataPromise
+
+Data => Resursen vi ville åt!

@@ -1,0 +1,17 @@
+body {
+    font: 12px "Roboto Condensed";
+}
+
+#favCities, #bigSpenders {
+    display: flex;
+    align-items: center;
+    margin: 20px 0px;
+}
+
+#favCities p, #bigSpenders p {
+    margin: 0px 5px;
+}
+
+#favCities p:last-child, #bigSpenders p:last-child {
+    margin-left: 25px;
+}
