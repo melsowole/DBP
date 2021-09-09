@@ -51,11 +51,15 @@ i:active{
 }
 
 input{
-    flex-grow: 1;
+    flex-grow: 2;
     border-radius: 2px;
     border: none;
     padding: 10px;
     outline: none;
+}
+
+.short-input{
+    flex-grow:1;
 }
 
 #icons{
@@ -76,8 +80,12 @@ section:nth-child(2)~ section{
     padding: 10px;
 }
 
-#msg-box{
+#msg-box .error{
     color: rgb(245, 50, 50);
+}
+
+#msg-box .success{
+    color: rgb(48, 133, 48);
 }
 
 p{
