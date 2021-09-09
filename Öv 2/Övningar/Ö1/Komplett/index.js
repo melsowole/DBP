@@ -1,7 +1,7 @@
 
 const person = {
-    firstName: "Angelina",
-    lastName: "Merkel",
+    firstName: "Maik",
+    lastName: "Hole",
     born: 1950
 }
 
@@ -28,7 +28,7 @@ document.getElementById("remove").addEventListener("click", function(){
    fetch(new Request('http://mpp.erikpineiro.se/dbp/users/',
       {
          method: 'DELETE',
-         body: JSON.stringify({id: 2}),
+         body: JSON.stringify({id: 93}),
          headers: {"Content-type": "application/json; charset=UTF-8"},
       }))
       .then( response => {
