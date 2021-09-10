@@ -1,10 +1,6 @@
 Vi forstätter med API:n users som vi såg i lektionen.
 Använd HTML-input-element för att låta användaren ange information)
 
-1)  Koda en sida som låter användaren ange first name och last name när hen vill radera en person.
-    Användaren behöver alltså inte veta id:et på personen som ska raderas.
-
-
 2)  Koda en sida som visar alla personer i DB:n som har samma first name som den som användaren väljer.
 
 

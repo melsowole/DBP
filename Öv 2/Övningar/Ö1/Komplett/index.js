@@ -28,7 +28,7 @@ document.getElementById("remove").addEventListener("click", function(){
    fetch(new Request('http://mpp.erikpineiro.se/dbp/users/',
       {
          method: 'DELETE',
-         body: JSON.stringify({id: 93}),
+         body: JSON.stringify({id: 111}),
          headers: {"Content-type": "application/json; charset=UTF-8"},
       }))
       .then( response => {
@@ -48,11 +48,16 @@ document.getElementById("patch").addEventListener("click", function(){
    fetch(new Request('http://mpp.erikpineiro.se/dbp/users/',
       {
          method: 'PATCH',
-         body: JSON.stringify({id: 1, firstName:"Yoman"}),
+         body: JSON.stringify({id: 103, firstName:"Melk"}),
          headers: {"Content-type": "application/json; charset=UTF-8"},
       }))
       .then( response => {
-         // Kod saknas här
+         if( response.status == 409){ 
+            console.log("Person already in DB");
+            throw Error("Person already in DB");
+         } else {
+            return response.json()
+         }
       })
       .then(console.log)
       .catch(console.log);  
