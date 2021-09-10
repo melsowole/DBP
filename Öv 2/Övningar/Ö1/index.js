@@ -8,15 +8,24 @@ const buttons = [
             if( fName.value == "" || lName.value == "" || born.value =="" ){
                 PRINT("Wrong format", "error")
             } else{
-                let obj = makeObj( getInputValue(fNAme), getInputValue(lName), getInputValue(born), "-")
-                console.log("obj")
-                // CALLDB()
+                let obj = makeObj( getInputValue(fName), getInputValue(lName), getInputValue(born), "-")
+
+                CALLDB(this.name, obj)
             }
         }
     },
     {
         name: "DELETE",
         svg: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13H5v-2h14v2z"/></svg>`,
+        method: function(){
+            if( idInput.value == "" ){
+                PRINT("Wrong format", "error")
+            } else{
+                let obj = makeObj( "-","-","-", getInputValue(idInput))
+
+                CALLDB(this.name, obj)
+            }
+        }
     },
     {
         name:"PATCH",
@@ -24,7 +33,12 @@ const buttons = [
     },
     {
         name:"GET",
-        svg: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>`
+        svg: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>`,
+        method: function (){
+            let u = GET();
+            u.then( d => d.forEach( p => PRINT(JSON.stringify(p))))
+
+        }
     },
     {
         name:"CLEAR",
@@ -36,7 +50,8 @@ const msgBox = document.getElementById("msg-box");
 const fName = document.getElementById("first-name");
 const lName = document.getElementById("last-name");
 const born = document.getElementById("born");
-const idInput = document.getElementById("id")
+const idInput = document.getElementById("id");
+let user = GET();
 
 let person = {
     firstName: "Paul",
@@ -73,9 +88,7 @@ buttons.forEach(icon =>{
     } else{
 
         i.addEventListener("click", ()=>{
-        
-
-            CALLDB(icon.name, )
+        icon.method()
         })
     }
 
@@ -84,10 +97,18 @@ buttons.forEach(icon =>{
     icons.append(i)
 })
 
-function GET(){
+async function GET(){
+    let request = new Request('http://mpp.erikpineiro.se/dbp/users/')
+    let response = await fetch(request)
+    let data = await response.json()
+        
+    return data
+}
+
+function GETandReturnUser(i){
     fetch( new Request('http://mpp.erikpineiro.se/dbp/users/') )
         .then( r => r.json() )
-        .then( d => console.log(d) )
+        .then( d => console.log( d.find( obj => obj.id == i ) ) )
 }
 
 function POST(){
@@ -141,19 +162,31 @@ function CALLDB(action, obj){
                 throw Error("User already in DB")
 
             } else{
-                r.json() 
+                return r.json() 
             }
         })
-        .then( d => {
+        .then( d => {         
+            console.log(d)
             if( action == "DELETE"){
-                console.log("deleted user")
+
+                let array = GET()
+                array.then( objD => {
+                    let deletedPerson = objD.find( dp => dp.id == d.id );
+                    PRINT(`Deleted user ${d.id}: ${deletedPerson.lastName}, ${deletedPerson.firstName} (${deletedPerson.born})`, "success")
+
+                } )
+
             } else if ( action == "POST"){
-                console.log("added user" )
+                PRINT(`Added user ${d.id}: ${d.lastName}, ${d.firstName} (${d.born})`, "success")
+                
             } else{
                 console.log("edited user")
             }
+
+            user = GET()
+
         } )
-        .catch( console.log("something went wrong") )
+        .catch( error => console.log(error) )
 }
 
 function makeObj(f, l, b, i){
@@ -168,15 +201,17 @@ function makeObj(f, l, b, i){
 }
 
 function getInputValue(input){
-    return input.value[0].toUppercase() + input.value.slice(1).toLowercase();
+    if(input == born || input == idInput){
+        return JSON.parse(input.value);
+    }
+    return input.value[0].toUpperCase() + input.value.slice(1).toLowerCase();
 }
 
 function PRINT(m, c){
-    console.log(m)
     let msg = document.createElement("p");
     msg.textContent = m;
     msg.classList.add(c);
-    msgBox.append(msg)
+    msgBox.prepend(msg)
 }
 
 function clearInputs(){
@@ -185,170 +220,3 @@ function clearInputs(){
     born.value="";
     idInput.value="";
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const input = document.querySelector("input");
-// const iconWrap = document.getElementById("icons")
-// const consoleBox = document.getElementById("console");
-// const description = document.getElementById("description");
-// const icons = [
-//     {
-//         name: "add",
-//         method: POST,
-//         svg: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>`,
-//     },
-//     {
-//         name: "delete",
-//         method: DELETE,
-//         svg: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 13H5v-2h14v2z"/></svg>`,
-//     },
-//     {
-//         name:"edit",
-//         svg:`<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M18 4V3c0-.55-.45-1-1-1H5c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V6h1v4H9v11c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-9h8V4h-3zm-2 2H6V4h10v2z"/></svg>`,
-//     },
-//     {
-//         name:"search",
-//         method: GET,
-//         svg: `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>`
-//     }
-// ];
-
-
-// function getInputValue(){
-//     return input.value[0] + input.value.slice(1);
-// }
-
-// function consoleLog(value){
-//     console.log(value);
-    
-//     let log = document.createElement("p");
-//     log.textContent = JSON.stringify(value);
-//     consoleBox.append(log)
-// }
-
-// icons.forEach(icon =>{
-//     let i = document.createElement("i");
-//     i.innerHTML = icon.svg;
-//     i.classList.add("icon");
-
-//     i.addEventListener("click", icon.method)
-
-//     iconWrap.append(i)
-// })
-
-
-// let obj = {
-//     firstName: "Lennt",
-//     lastName: "Oj",
-//     born: 1996,
-// }
-
-// function GET(){
-//     fetch( new Request( "http://mpp.erikpineiro.se/dbp/users/" ) )
-//         .then( p => p.json())
-//         .then (d => console.log( d) )
-// }
-
-// function ERROR(message){
-//     let msg = document.createElement("p");
-//     msg.classList.add("error"),
-//     msg.textContent = "Sorry, the format is wrong"
-// }
-
-// function DELETE(){
-//     fetch( new Request("http://mpp.erikpineiro.se/dbp/users/", 
-//         {
-//             method: "DELETE",
-//             body: JSON.stringify( getInputValue() ),
-//             headers: {"Content-type": "application/json; charset=UTF-8"}
-//         }) )
-//         .then( r => {
-//             if(r.status == 404){
-//                 ERROR("ID does not exist")
-//             } else{
-//                 return r.json()
-//             }
-//         })
-//         .catch(ERROR("Something went wrong")  )
-// };
-
-// function POST(){
-//     fetch( new Request("http://mpp.erikpineiro.se/dbp/users/",
-//          {
-//             method: "POST",
-//             body: JSON.stringify( getInputValue() ),
-//             headers: {"Content-type": "application/json; charset=UTF-8"}
-//         }) )
-//         .then( p => {
-//             if( p.status == 409 ){
-//                 ERROR("Person is already in database")
-//             } else {
-//                 return p.json() 
-//             }
-//         })
-//         .then( d => console.log(d))
-//         .catch( ERROR("Something went wrong") )
-// };

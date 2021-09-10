@@ -80,6 +80,11 @@ section:nth-child(2)~ section{
     padding: 10px;
 }
 
+#msg-box{
+    overflow: hidden scroll;
+    max-height: 50vh;
+}
+
 #msg-box .error{
     color: rgb(245, 50, 50);
 }
@@ -100,8 +105,6 @@ section:nth-child(3){
 
 #console{
     padding: 10px;
-    overflow-y:hidden;
-    flex-grow: 1;
 }
 
 #console p{
