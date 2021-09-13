@@ -1,0 +1,19 @@
+Koda ett program som tar emot 400 personer från API:n randomuser.me
+Logga hur många av dessa personer har ett förnamn som börjar med "A".
+Logga även förnamnen som börjar med A. Dubletter ok.
+
+
+
+(Gör extra-övningarna när du är klar med alla andra, de kan göras senare under kursen också)
+
+
+Extra:  Logga, i bokstavsordning, alla förnamn som finns bland dessa 400 personer.
+        Inga dubletter får finnas i listan som loggas.
+        Alltså inget namn får förekomma mer än en gång i listan.
+
+Extra:  Logga, i bokstavsordning, alla förnamn som finns bland dessa 400 personer.
+        Inga dubletter (som ovan)
+        Bredvid varje namn ska det även loggas hur många gånger namnet förekommer i listan.
+        Se bilden "Ö1-Extra2.png"
+
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 40px;
+
+        text-align: center;
+
+    }
+    #counts {
+        display: flex;
+        width: 60vw;
+    }
+    #counts > div {
+        flex-basis: 0px;
+        flex-grow: 1;
+    }
+    #counts > div > div:first-child {
+        font-size: 20px;
+    }
+    #latestName {
+        border-radius: 10px;
+        padding: 20px;        
+    }
+</style>
+<body>
+
+    <div>
+        <div id="counts">
+            <div id="fetchCount">
+                <div>Fetches</div>
+                <div></div>
+            </div>
+            <div id="nameCount">
+                <div>Names</div>
+                <div></div>
+            </div>
+        </div>
+        <div id="latestName"></div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+
+OBS: Lite svårare
+
+
+Extra:
+Koda ett program som hämtar en person år gången från randomuser.me.
+Programmet ska hämta personer tills det att det har kommit in exakt 50 kvinnliga förnamn som 
+alla är olika. Sedan ska den logga de alla i bokstavsordning.
+Slutligen ska den logga hur många gånger programmet har behövt fetcha (det kommer troligtvis att vara fler än 50).
+
+Påbyggnad:
+Kolla på videon och skriv ett program som på samma sätt uppdaterar användaren om vad
+som händer i programmet.
