@@ -50,10 +50,18 @@ async function getWeatherInMadridAsync(){
 function getCarsChain(){
    let request = new Request("https://api.api-ninjas.com/v1/cars?make=toyota&year=2010&limit=30", options);
 
+   let noRepeat= [];
+
    fetch(request)
       .then( r => r.json())
       .then( d => {
-         console.log( [...new Set( d.map( m => m.model) )] )
+         d.forEach( car =>{
+            if( !noRepeat.some( c => c.model == car.model )){
+               noRepeat.push(car)
+            }
+         } )
+
+         noRepeat.forEach( car => console.log(car))
       })
 }
 
@@ -64,12 +72,21 @@ async function getCarsAsync(){
    let response = await fetch(request);
    let data = await response.json()
 
-   return data
+   let noRepeat = [];
+
+   data.forEach( car => {
+      if( noRepeat.some( ent => ent.model === car.model) ){}
+      else {
+         noRepeat.push(car)
+      }
+   })
+
+   data.forEach(element => {
+      console.log(element)
+   });
 }
 
 // getCarsAsync()
-//    .then( d => console.log( [...new Set( d.map( c => c.model ) )] ))
-// ;
 
 
 
@@ -91,12 +108,12 @@ function sentenceChain(){
       .then( d => {
          let transMan = d.length;
          fetch(rTransAuto)
-         .then( r => r.json())
-         .then( d => {
+      .then( r => r.json())
+      .then( d => {
                let transAuto = d.length;
 
                console.log( `Om vi snackar fwd-bilar så släppte Toyota, år 2010, ${transMan} bilar med manual transmission och ${transAuto} med automatic transmission` )
-            } )
+         } )
       })
 
 }
@@ -126,13 +143,32 @@ async function sentenceAsync(){
    let manData = await manResp.json();
    let autoData = await autoResp.json()
  
-   return manData, autoData
+   return [manData, autoData]
 }  
 
 // sentenceAsync()
-//    .then( d => {
-//       return console.log(d)
-//    })
+//    .then( d =>{
+   //       console.log(
+   //          `Om vi snackar fwd-bilar så släppte Toyota, år 2010, ${d[0].length} bilar med manual transmission och ${d[1].length} med automatic transmission`
+   //       )
+//    } )
+      
+      
+async function sentenceAsyncErik(){
+let rTransMan = new Request("https://api.api-ninjas.com/v1/cars?make=toyota&year=2010&transmission=m&limit=30", options);
+let rTransAuto = new Request("https://api.api-ninjas.com/v1/cars?make=toyota&year=2010&limit=30&transmission=a", options);
+      
+let manResp = await fetch(rTransMan);
+let manData = await manResp.json();
 
+let autoResp = await fetch(rTransAuto);
+let autoData = await autoResp.json()
+       
+logger( manData.length, autoData.length )
+}  
 
+function logger( m, a ){
+   console.log(`Om vi snackar fwd-bilar så släppte Toyota, år 2010, ${m} bilar med manual transmission och ${a} med automatic transmission`)
+}
 
+sentenceAsyncErik()

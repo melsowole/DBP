@@ -18,14 +18,14 @@ const options = {
       redirect: 'follow',
       headers: {
          "Content-type": "application/json; charset=UTF-8",
-         'X-CSCAPI-KEY': 'VFh5MGJBbjd3S1BSNVVKbVlWU1BjaTFFYmM3MjVJVzFha2JlZk40OA=='
+         'X-CSCAPI-KEY': 'UVVuOUFhMHVORDdVZWl3MWR4bURYR3NpNXhWYkNRUHB2TVptcnU3MA=='
       }
    },
    API2: {
       method: 'GET',
       headers: {
          "Content-type": "application/json; charset=UTF-8",
-         'X-Api-Key': 'K+op6jSgxahEvSpE386nHQ==FpOKGk3b1IoNdmKY'
+         'X-Api-Key': 'MWB/A/bxTe28urjv+vzZ1g==7bOIsZj0EQLOjdQh'
       },
    }
 }
@@ -41,9 +41,27 @@ const countries = ["SE", "ES", "IT", "PT", "FR", "GR", "BE", "NL", "DK", "DE", "
 // capitals = ["Stockholm", "Madrid", "Rome", "Lisbon", "Paris", ...]
 // Lös det med Promise.all (och async eller chain, som du vill)
 
+async function getCapitals(){
+   let capitals = [];
+   let countriesObj = [];
 
+   let requests = []
+   countries.forEach(c => {
+      requests.push( fetch(new Request(`https://api.countrystatecity.in/v1/countries/${c}`, options.API1)) )
+   });
 
+   let response = await Promise.all( requests );
+   let data = await Promise.all( response.map( r => r.json() ) );
+   
+   data.forEach( country => {
+      capitals.push(country.capital)
+      countriesObj.push(country)
+   } )
+   
+   // console.log(capitals)
 
+   return countriesObj
+}
 
 // 2
 // Om ni kollar på informationen om landet som man får från Countrystatecity så hittar ni
@@ -51,8 +69,18 @@ const countries = ["SE", "ES", "IT", "PT", "FR", "GR", "BE", "NL", "DK", "DE", "
 // Hur som helst, se till att huvudstäderna i arrayen capitals är sorterade enligt stigande
 // latitude (för landet), alltså de som ligger mest söderut först.
 
+async function sortLat(){
+   let countries = await  getCapitals();
+   countries = countries.sort( (x, y ) => x.latitude > y.latitude ? 1 :-1)
 
+   countries.forEach( country => {
+      console.log( country.capital, country.latitude )
+   } )
 
+   return countries
+}
+
+// sortLat()
 
 
 
@@ -69,6 +97,11 @@ const countries = ["SE", "ES", "IT", "PT", "FR", "GR", "BE", "NL", "DK", "DE", "
 // vi söker. Det finns ju några städer som har samma namn som andra.
 // Vi utgår från att vi får bara ett element i arrayen, som kan nås med data[0].
 
+async function newSortLat(){
+   let countries = await sortLat();
+
+   
+}
 
 
 
