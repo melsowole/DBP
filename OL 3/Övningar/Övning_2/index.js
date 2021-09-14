@@ -52,36 +52,23 @@ async function getCapitals(){
    let response = await Promise.all( requests );
    let data = await Promise.all( response.map( r => r.json() ) );
    
-   let counter = 0;
    data.forEach( city => {
       capitals.push({
-         id: counter,
          name: city.capital,
          lat: JSON.parse(city.latitude),
       })
-      counter++
    } )
 
-   return capitals
-}
-
-// 2
+   // 2
 // Om ni kollar på informationen om landet som man får från Countrystatecity så hittar ni
 // nycklarna longitude och latitude. Det är ungefär mittpunkten i landet (tror jag).
 // Hur som helst, se till att huvudstäderna i arrayen capitals är sorterade enligt stigande
 // latitude (för landet), alltså de som ligger mest söderut först.
-
-async function sortLat(){
-   let capitals = await  getCapitals();
-
-   capitals = capitals.sort( (x, y ) => x.lat > y.lat ? 1 :-1)
-
-   // capitals.forEach( city => {
-   //    console.log( city.name, city.lat )
-   // } )
+   capitals.sort( (x, y ) => x.lat > y.lat ? 1 :-1)
 
    return capitals
 }
+
 
 
 // 3
@@ -97,23 +84,26 @@ async function sortLat(){
 // vi söker. Det finns ju några städer som har samma namn som andra.
 // Vi utgår från att vi får bara ett element i arrayen, som kan nås med data[0].
 
-async function newSortLat(){
-   let capitals = await sortLat();
+async function getAccCapitals(){
+   let capitals = await getCapitals();
 
-   let newCapitals = []
+   let promises = []
    capitals.forEach( c => {
-      newCapitals.push( fetch( new Request(`https://api.api-ninjas.com/v1/city?name=${c.name}`, options.API2) ) )
+      promises.push( fetch( new Request(`https://api.api-ninjas.com/v1/city?name=${c.name}`, options.API2) ) )
    } )
 
-   let response = await Promise.all( newCapitals );
+   let response = await Promise.all( promises );
    let data = await Promise.all( response.map( obj => obj.json() ) );
 
+   let newCapitals = [];
    data.forEach( cArr =>{
-      city = capitals.find( c => c.name == cArr[0].name );
-      city.newLat = cArr[0].latitude;
+      newCapitals.push({
+         name: cArr[0].name,
+         lat: cArr[0].latitude,
+      })
    })
 
-   return capitals;
+   return newCapitals;
 }
 
 
@@ -126,28 +116,59 @@ async function newSortLat(){
 // Am i making any sense?
 
 async function biggestDiff(){
-   let capitals = await newSortLat();
-   let newCapitals = JSON.parse( JSON.stringify(capitals) );
+   let capitals = await getCapitals();
+   let newCapitals = await getAccCapitals();
 
-   newCapitals.sort( (x,y) => x.newLat > y.newLat ? 1: -1 );
+   capitals.forEach( c => {
+      let ref = newCapitals.find( city => city.name == c.name );
+      c.diff = ref.lat - c.lat;
+      if( Math.sign(c.diff) == -1 ){
+         c.diff = c.diff - (c.diff * 2);
+      }
+   } )
 
-   console.log()
+   capitals.sort( (x,y) => x.diff > y.diff ? -1 : 1 )
+
+   console.log(capitals)
+
 }
-
-biggestDiff()
-
-
-
-
+// biggestDiff()
  
 // 4
 // Med hjälp av Countrystatecity och Ninja, hämta info om vädret i varje huvudstad och 
 // logga en lista över alla huvudstäder sorterade efter vilka som har mest sol
 // Se bild Ö24 för inspiration.
 
+async function f4(){
+   let requests = [];
+
+   countries.forEach(country => {
+      requests.push( fetch( new Request(`https://api.countrystatecity.in/v1/countries/${country}`, options.API1) ) )
+   })
+
+   let response = await Promise.all(requests);
+   let data = await Promise.all( response.map( obj => obj.json() ) );
+
+   let coordinates = data.map( c => {
+      return{
+         name: c.name, 
+         lat: c.latitude,
+         long: c.longitude
+      }
+   } )
+
+   requests = [];
+
+   coordinates.forEach( c =>{
+      requests.push( fetch( new Request(`https://api.api-ninjas.com/v1/city?name=${c.name}`, options.API2) ) )
+   } )
+
+   // console.log(data[0])
 
 
+}
 
+f4()
 
 
 
