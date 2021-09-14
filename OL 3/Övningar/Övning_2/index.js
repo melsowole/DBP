@@ -43,7 +43,6 @@ const countries = ["SE", "ES", "IT", "PT", "FR", "GR", "BE", "NL", "DK", "DE", "
 
 async function getCapitals(){
    let capitals = [];
-   let countriesObj = [];
 
    let requests = []
    countries.forEach(c => {
@@ -53,14 +52,17 @@ async function getCapitals(){
    let response = await Promise.all( requests );
    let data = await Promise.all( response.map( r => r.json() ) );
    
-   data.forEach( country => {
-      capitals.push(country.capital)
-      countriesObj.push(country)
+   let counter = 0;
+   data.forEach( city => {
+      capitals.push({
+         id: counter,
+         name: city.capital,
+         lat: JSON.parse(city.latitude),
+      })
+      counter++
    } )
-   
-   // console.log(capitals)
 
-   return countriesObj
+   return capitals
 }
 
 // 2
@@ -70,18 +72,16 @@ async function getCapitals(){
 // latitude (för landet), alltså de som ligger mest söderut först.
 
 async function sortLat(){
-   let countries = await  getCapitals();
-   countries = countries.sort( (x, y ) => x.latitude > y.latitude ? 1 :-1)
+   let capitals = await  getCapitals();
 
-   countries.forEach( country => {
-      console.log( country.capital, country.latitude )
-   } )
+   capitals = capitals.sort( (x, y ) => x.lat > y.lat ? 1 :-1)
 
-   return countries
+   // capitals.forEach( city => {
+   //    console.log( city.name, city.lat )
+   // } )
+
+   return capitals
 }
-
-// sortLat()
-
 
 
 // 3
@@ -98,13 +98,23 @@ async function sortLat(){
 // Vi utgår från att vi får bara ett element i arrayen, som kan nås med data[0].
 
 async function newSortLat(){
-   let countries = await sortLat();
+   let capitals = await sortLat();
 
-   
+   let newCapitals = []
+   capitals.forEach( c => {
+      newCapitals.push( fetch( new Request(`https://api.api-ninjas.com/v1/city?name=${c.name}`, options.API2) ) )
+   } )
+
+   let response = await Promise.all( newCapitals );
+   let data = await Promise.all( response.map( obj => obj.json() ) );
+
+   data.forEach( cArr =>{
+      city = capitals.find( c => c.name == cArr[0].name );
+      city.newLat = cArr[0].latitude;
+   })
+
+   return capitals;
 }
-
-
-
 
 
 
@@ -115,7 +125,16 @@ async function newSortLat(){
 // som i första sorteringen hamnade längst bort från sin korrekta placering...
 // Am i making any sense?
 
+async function biggestDiff(){
+   let capitals = await newSortLat();
+   let newCapitals = JSON.parse( JSON.stringify(capitals) );
 
+   newCapitals.sort( (x,y) => x.newLat > y.newLat ? 1: -1 );
+
+   console.log()
+}
+
+biggestDiff()
 
 
 
