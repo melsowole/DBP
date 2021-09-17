@@ -1,14 +1,24 @@
 "use strict";
 
+const main = document.querySelector("main");
+const aside = document.querySelector("aside");
 const HA = 15;
 
 let images;
-
 if( localStorage.getItem("images") ){
-    images = JSON.parse(localStorage.getItem("images"))
-} else {
-    fetchImages();
-}
+images = JSON.parse(localStorage.getItem("images"))
+} else { fetchImages() }
+
+
+// CALLS
+paintingsDOM( users[15])
+fetchUsers()
+userListDOM()
+
+
+
+
+//  FUNCTION
 
 async function fetchImages(){
     let result;
@@ -75,10 +85,6 @@ function manageFavorites(obj){
 
     button.innerHTML  = "Add to favorites";
 
-    fetch( new Request('mpp.erikpineiro.se/dbp/sameTaste/users.php') )
-        .then( r => r.json() )
-        .then( d => console.log)
-
     button.addEventListener("click", () => {
         addFavorite(obj.objectID)
     })
@@ -87,10 +93,10 @@ function manageFavorites(obj){
     return button
 }
 
-paintingDOM(images[1], 15);
+
 
 async function addFavorite(paintingID){
-    let rqst = new Request( 'mpp.erikpineiro.se/dbp/sameTaste/users.php',
+    let rqst = new Request( 'http://mpp.erikpineiro.se/dbp/sameTaste/users.php',
     {
         method: "PATCH",
         headers: {"Content-type": "application/json; charset=UTF-8"},
@@ -103,9 +109,94 @@ async function addFavorite(paintingID){
     console.log(data)
 }
 
+async function fetchUsers(){
+    let r = await fetch( new Request('http://mpp.erikpineiro.se/dbp/sameTaste/users.php') );
+    let data = await r.json();
+
+    users = data.message;
+    return data.message
+}
 
 
 
-// localStorage.clear()
+
+async function userListDOM( ){
+    let users = await fetchUsers();
+
+    let elem = document.createElement("section");
+
+    users.forEach( i => {
+        elem.append( userDOM(i) )
+    })
+
+    aside.append(elem)
+}
+
+async function paintingsDOM(userObj){
+    console.log(userObj)
+    let paintings = [];
+    if(userObj.id == HA){
+        paintings = images;
+    } else {
+        userObj.favs.forEach( f => {
+            let item = images.find(img => img.objectID == f)
+            paintings.append(item)
+        } )
+    }
+
+    let elem = document.createElement("section");
+
+    paintings.forEach( i => {
+        elem.append( paintingDOM(i, userObj.id) )
+    })
+
+    console.log(paintings)
+
+    main.append(elem)
+}
+
+
+
+function userDOM(user){
+    let elem = document.createElement("div");
+
+    let name = document.createElement("span");
+    name.textContent = user.alias;
+
+    let favInfo = document.createElement("span")
+    let favW = document.createElement("span");
+    favW.innerHTML = `[<span class="favs"> </span>]` 
+    favInfo.append(favW)
+    if(user.id !== HA){
+        let sharedW = document.createElement("span");
+        sharedW.innerHTML = `(<span class="shared"> </span>)` 
+        favInfo.append(sharedW)
+
+        elem.addEventListener("click", () => {
+            showFavs(user.id)
+        })
+    }
+
+    elem.append(name, favInfo)
+    
+    return elem
+}
+
+function showFavs(userID){
+}
+
+
+function loadingScreen(){
+    let elem = document.createElement("div");
+
+    elem.setAttribute("id", "loading-splash");
+
+    main.append(elem)
+}
+
+
+
+
+localStorage.clear()
 
 
