@@ -1,0 +1,65 @@
+A, Huvudanvändare - HA, deklareras i koden ( Jag: 15, SameTaste DB)
+ - ATESTER är för att se om sidan uppdateras
+
+B, Alla verk med GET: https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=11&q=snow
+ - keys: ObjectId, primaryImageSmall, title, artistDisplayName
+
+C, HA kan välja favoriter 
+ - favoriter är markerade och får en remove-knapp
+
+D, Max antal favoriter, antal bestäms av API
+ - 409 response vid för många, geanvändare lämplig feedback
+
+E, Vid inladdning ska HA vara selekterad
+
+F, När man klickar på andra användare visas deras favoriter
+
+G, Gemensamma favoriter är markerade
+
+H, I allas namn: [antal valda favoriter](gemensamma favoriter med HA)
+
+
+1. All kommunikation med serverlöses med async och await
+
+2. Info om bilder fetchas en gång (när sidan laddas)
+ - bilder får inte tas bort eller läggas till näranvändare tar bort eller lägger till favoriter
+ - Får ta ort och lägga till användare
+ 
+3. Kontonuerlig uppdatering:
+ - Varje gång HA lägger till eller tar bort en favorit
+   - API svarar med uppdaterad lista av users, när svar kommer ska app uppdatera siffror
+ - Var 30:e sekundska app skicka förfrågn till SameTasre för att hämta uppdaterad info
+ 
+4. Feedback vid uppdatering av users
+
+5. Feedback vid hämtning av info om bilder (när deinte finns i local storage)
+
+6. Feedback vid add/remove favorite
+
+7. Feedbck vid kontonuerlig uppdatering
+
+8. Bilder i local storage
+ - array av objekt
+   - objectID, primaryImmageSmall, title, artistDisplayName
+   
+9. Sortering
+ - Användare: namn A - Ö
+ - Verk: Förnamn A - Ö
+ 
+10. Grafik
+ - Snyggt vw 1000px, inte responsiv
+ - Minst se 8 hela verk på 1000x700px
+ - Användare och verk ska ha olika scroll
+   - Inga andra scrolls
+ - Tavlor
+   - Title, by Author
+   - Vita ramen ska alltid vara fyrkantig
+   - Minst 10px vit ram runt tavlan
+   
+11. Korrekt indentering av kod
+
+12. Relevanta namn på variabler
+
+
+ 
+

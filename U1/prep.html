@@ -1,0 +1,75 @@
+Global Variables:
+const HA = 15;
+const images = [];
+
+
+Functionalities:
+on page load:
+fetch images. Load and display
+fetch users. load and display
+
+add and remove favorites
+if(too many) => display error
+
+select main user based on HA
+
+show favorites other profiles
+
+in user name [favorites x](shares favorites x)
+
+update list when 
+-> add/remove favorite
+-> every 30sec
+
+User feedback when
+-> update users
+-> fetch images
+-> remove/add favorites
+
+Sort users A -Z
+
+Sort paintings A -Z
+
+
+API:
+mpp.erikpineiro.se/dbp/sameTaste/users.php
+Documentation: https://mau.app.box.com/s/gyp6jdfijygo6dg98tk6q52dzwdvsjwm/file/860383414063
+
+Met images, id
+https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=11&q=snow
+
+Met image get 1 object, 
+https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}
+Documentation: https://metmuseum.github.io/
+
+
+Functions
+
+<!-- fetchImages() => get images from API and save to local storage -->
+<!-- -> images[ {objectID, primaryImageSmall, title, artistDisplayName} ] -->
+
+<!-- paintingDOM(object, yser_id) => return HTMLElement -->
+-> if(id == HA) create button, manageFavorites(button)
+
+manageFavorites() => creates button for adding and removing
+
+paintingArrayDOM(arrayOfPaintings, id) => return arrayOfHTMLElements
+let HA = getHAInfo()
+--> obj exists in HA Faves: class = "shared-favorite"
+--> obj doesnt exist in HA Faves: class = "other-favorite"
+
+appendDOM(arrayOfHTMLElements) => append
+
+createUserEntries( arrayOfObjects ) => return arrayOfHtmlElements
+-> sort HA first
+-> if(!HA) [] ()
+
+fetchUserInfo() => returns updatedUserList
+
+getHAInfo() => return HAObj
+
+
+
+
+
+
