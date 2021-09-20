@@ -4,8 +4,6 @@ const images = [];
 
 
 on entry:
-
-
 createUserList()
 initially: getUsers()
 --> initially: loadUsers();
@@ -15,6 +13,163 @@ createImgList()
 initially: getImages()
     --> initially: loadImages();
     --> finally: remove load, append objects
+
+
+;
+
+
+
+Functions, in depth:
+
+<!-- [app.js] -->
+
+getUsers(){
+    load 
+
+    fetch user list, add to variable
+    users.sort
+    let output = createUserList(array)
+
+    resolve Load
+    main.append(output)
+}
+
+getImages(array){
+    load 
+
+    let imagesArray = [];
+
+    if( array !== "" ){
+        imagesArray = array;
+
+    } else {
+        if (images in local storage){
+            imagesArray = local storaged images
+        } else {
+            get list
+            let array = get img objects
+            add to local storage
+            imagesArray = array;
+        }
+    }
+
+    let output = printPaintings(imagesArray);
+
+    resolve Load
+    append output
+
+}
+
+printPaintings(imagesArray){
+    let output = "";
+    for each(img){
+        let DOM = createPaintingDOM(imgObj);
+        output += DOM;
+    }
+    return output (HTML elems)
+}
+
+printUserList(array){
+    let output = "";
+
+    array.forEach(obj){
+        let DOM = createUserDOM(obj);
+        output += DOM
+    }
+
+    return output  (HTML elems)
+}
+
+createUserDOM(obj){
+    let output = a;
+
+    if(obj.id == HA){
+        setAttribute = url, "/homepage";
+    } else{
+        setAttribute = url, "/user?firstName";
+        "[favs] (shared favs)"
+    }
+
+    return output
+}
+
+createPaintingDOM(imgObj){
+    let output;
+
+    if( /index ){
+        let button;
+        manageFav(button)
+    } else {
+        if ( img is in HA fav ){
+            classList. add ("fav")
+        }
+    }
+
+   return output;
+}
+
+
+Intervalled Timeout, 30secs{
+    getUsers()
+}
+
+
+
+<!-- [index.js] -->
+manageFavorites(htmlElem){
+    if(htmlElem.class = fav){
+        htmlElem onclick --> removeFav(htmlElem)
+    } else {
+        htmlElem onclick --> addFav(htmlElem)
+    }
+
+}
+
+removeFav(htmlElem){
+    htmlElem remove eventlistener
+
+    Load
+
+    contact server and remove
+
+    getUsers()
+    
+    resolve Load
+    htmlElem onclick --> addFav()
+}
+
+addFav(htmlElem){
+    htmlElem remove eventlistener
+    
+    Load
+    
+    contact server 
+    if (fav limit) --> .catch()
+    add fav
+    
+    getUsers()
+
+    resolve Load
+    htmlElem onclick --> removeFav()
+}
+
+
+<!-- [user.js] -->
+
+let user = userList.find( url.contains( firstName ) );
+
+let userImages = [];
+
+forEach(user.fav){
+    find obj with same name;
+    append in user images
+}
+
+
+getImages( userImages )
+
+
+
 
 
 
@@ -79,9 +234,9 @@ User feedback when
 -> fetch images
 -> remove/add favorites
 
-Sort users A -Z
+Sort users A - Z
 
-Sort paintings A -Z
+Sort paintings A - Z
 
 API:
 mpp.erikpineiro.se/dbp/sameTaste/users.php

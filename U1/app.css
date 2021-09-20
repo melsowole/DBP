@@ -47,6 +47,10 @@ body > *{
     flex-basis: 200px;
 }
 
+.user-list a{
+    display: block;
+}
+
 .painting{
     display: flex;
     flex-direction: column;
