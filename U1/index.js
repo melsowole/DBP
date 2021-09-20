@@ -87,7 +87,7 @@ function manageFavorites(obj){
     return button
 }
 
-paintingDOM(images[1], 15);
+// paintingDOM(images[1], 15);
 
 async function addFavorite(paintingID){
     let rqst = new Request( 'mpp.erikpineiro.se/dbp/sameTaste/users.php',
@@ -102,6 +102,19 @@ async function addFavorite(paintingID){
 
     console.log(data)
 }
+
+
+
+async function getUsers(){
+    let request = new Request('http://mpp.erikpineiro.se/dbp/sameTaste/users.php')
+    let response = await fetch(request);
+    let data = await response.json()
+
+    console.log(data)
+}
+
+
+getUsers()
 
 
 
