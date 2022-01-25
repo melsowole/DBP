@@ -1,0 +1,254 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;1,400&display=swap');
+
+
+:root{
+    --main: white;
+    --mainShade: whitesmoke;
+    --gray: rgb(201, 201, 201);
+    --black: rgb(27, 27, 27);
+    --accent:#0000ff;
+
+    --xs: 8px;
+    --s: 14px;
+    --m: 16px;
+    --l: 20px;
+    --xl: 32px;
+    --xxl: 150px;
+
+    --sans: 'Karla', sans-serif;;
+
+}
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--sans);
+    font-size: var(--m);
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    background-color: var(--mainShade);
+
+}
+
+aside, main{
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+aside::-webkit-scrollbar, main::-webkit-scrollbar {
+    display: none;
+}
+
+aside{
+    background-color:var(--main);
+
+    flex-basis: calc( 200px + var(--m) * 2 );
+    width: 500px;
+    padding: var(--s);
+    /* box-shadow: -1px 0px 2px var(--gray); */
+    box-shadow: 0px 4px 7px 0px var(--gray);
+
+}
+
+main{
+    position: relative;
+
+    padding: var(--xl);
+    
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow-y: scroll;
+}
+
+#gallery-grid{
+   
+    --galleryBasis: calc( (var(--width) + var(--m) * 4) / 5 );
+
+    display: grid;
+    gap: var(--m);
+    display: flex;
+    flex-wrap: wrap;   
+    align-content: baseline;
+}
+
+.error{
+    position: fixed;
+    top: 50px;
+    height: var(--xl);
+    color: var(--main);
+    padding: var(--xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent);
+
+    transition: opacity 0.2s;
+}
+
+/* // PAINTING SIDE */
+
+/* PAINTINGS */
+.painting{
+    width: var(--galleryBasis);
+    background-color: var(--main);
+    display: flex;
+    flex-direction: column;
+
+    height: calc( var(--galleryBasis) + 150px );
+
+    box-shadow: 0px 4px 7px 0px var(--gray);
+}
+
+.img-wrapper{
+    height: var(--galleryBasis);
+    width: var(--galleryBasis);
+    padding: var(--xs);
+}
+
+.info-wrapper{
+    margin: 0px var(--xs);
+    flex-grow: 1;
+}
+
+.info-wrapper > *{
+    margin-bottom: var(--xs);
+    font-size: var(--s);
+}
+
+.painting img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+main .shared{
+    border-bottom: 5px solid var(--accent)
+}
+
+
+/* BUTTON */
+button{
+    width: 100%;
+    border-radius: 0;
+    border: 0;
+    background-color: var(--main);
+    cursor: pointer;
+    padding: var(--xs);
+}
+
+button svg{
+    height: var(--m);
+}
+
+.is-loading{
+    fill: var(--gray)
+}
+
+.is-fav{
+    fill: var(--accent)
+}
+
+.not-fav .inner-fill{
+    opacity: 0;
+}
+
+
+/* // USER SIDE */
+
+.user, .main-user{
+    cursor: pointer;
+}
+.user:hover, .main-user:hover{
+    color: var(--accent);
+    transition: 0.2s;
+}
+
+/* ACTIVES */
+.main-user .active{ border-bottom: 1px solid var(--accent);}
+#user-list .active{ color: var(--accent)}
+#user-list .active svg{fill: var(--accent)}
+
+
+#user-load{
+    height: var(--xl);
+    
+    display: flex;
+    justify-content: center;
+}
+
+#user-load svg{
+    fill: var(--accent);
+    -webkit-animation: rotate-center 1s linear infinite ;
+	animation: rotate-center 1s linear infinite ;
+}
+
+.main-user{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+    padding-bottom: var(--m);
+}
+
+.main-user .name{
+    font-size: var(--l);
+}
+
+.main-user .favs-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    line-height: 50%;
+}
+
+.main-user svg{
+    fill: var(--black);
+    height: var(--m);
+}
+
+.main-user svg .inner-fill{opacity: 0;}
+
+
+/* other users */
+#user-list > div{
+    /* margin-top: var(--s); */
+    padding-top: var(--s);
+}
+
+.user .favs-wrapper{
+    font-style: italic;
+    font-size: var(--s);
+}
+
+
+
+
+
+
+
+
+/* ANIMATION */
+@-webkit-keyframes rotate-center {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+  }
+@keyframes rotate-center {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
