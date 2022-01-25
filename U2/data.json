@@ -1,0 +1,102 @@
+{
+    "dogs": {
+        "0": {
+            "name": "Vega",
+            "breed": "Border collie",
+            "age": "2",
+            "note": "She is very energetic!",
+            "owner": "1",
+            "id": "0"
+        },
+        "3": {
+            "name": "Tiara",
+            "breed": "Pug",
+            "age": "1",
+            "note": "Could maybe be cute!",
+            "owner": "2",
+            "id": "3"
+        },
+        "4": {
+            "name": "Tuber",
+            "breed": "Border collie",
+            "age": "6",
+            "note": "A bit fat but no shame!",
+            "owner": "2",
+            "id": "4"
+        },
+        "5": {
+            "name": "Gordon",
+            "breed": "Labrador",
+            "age": "5",
+            "note": "Smarter than yo mama!",
+            "owner": "2",
+            "id": "5"
+        },
+        "8": {
+            "name": "Pum",
+            "breed": "Border Collie",
+            "age": "15",
+            "note": "And old bastard!",
+            "owner": "2",
+            "id": "8"
+        },
+        "9": {
+            "name": "Gromp",
+            "breed": "Swamp Dog",
+            "age": "4",
+            "note": "He smells a bit",
+            "owner": "3",
+            "id": "3"
+        },
+        "10": {
+            "name": "Axl",
+            "breed": "Water Dog",
+            "age": "10",
+            "note": "Might bite you!",
+            "owner": "3",
+            "id": "10"
+        },
+        "11": {
+            "name": "Bug",
+            "breed": "Pug",
+            "age": "3",
+            "note": "He is big!",
+            "owner": 0,
+            "id": "11"
+        },
+        "13": {
+            "name": "Hanna",
+            "breed": "Husky",
+            "age": "12",
+            "note": "Loves tumtum rubrub",
+            "owner": 0,
+            "id": "13"
+        }
+    },
+    "users": [
+        {
+            "username": "Mel",
+            "email": "mel@mau.se",
+            "password": "pass",
+            "id": 0
+        },
+        {
+            "username": "Emelie",
+            "email": "eme@mail.se",
+            "password": "pass",
+            "id": 1
+        },
+        {
+            "username": "Sebbe",
+            "email": "sebbe@demo.se",
+            "password": "1234",
+            "id": 2
+        },
+        {
+            "username": "Vincent",
+            "email": "vin@mail.se",
+            "password": "pass",
+            "id": 3
+        }
+    ]
+}

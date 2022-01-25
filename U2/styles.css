@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+/* font-family: 'Secular One', sans-serif; */
+
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,300;0,400;0,600;1,400;1,700&display=swap');
+/* font-family: 'Josefin Sans', sans-serif; */
+:root{
+    font-size: 18px;
+    --sans:'Josefin Sans', sans-serif;
+    --serif:Georgia, 'Times New Roman', Times, serif;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    --color: #87D488;
+    --colorLight: #e6f3e6;
+    --red: #FB410E;
+    --white: white;
+    --black: #161515;
+    --gray:#f5f5f5;
+    --shadowCol:#0000001c;
+    --shadow: 0px 2px 5px 1px var(--shadowCol);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body > *{
+    --margin: 25%;
+    padding-left: var(--margin);
+    padding-right: var(--margin);
+}
+
+@media (max-width: 1100px){
+    
+    body > *{
+        --margin: 15%;
+
+    }
+}
+
+/* UNIFORM STYLING */
+h1, h2, h3, h4{
+    font-family: var(--sans);
+}
+
+/* small text */
+label, th, span{
+    font-size: 0.8rem;
+}
+
+/* medium text */
+a, button, p, div, td, table a{
+    font-size: 1rem;
+}
+
+a, button, label, th,nav a{
+    font-family: var(--sans);
+    text-decoration: none;
+    font-weight: normal;
+}
+
+p, span, div, td, table a{
+    font-family: var(--serif);
+    color: var(--black);
+}
+
+a, button, label, th{
+    text-transform: capitalize;
+}
+
+nav a{
+    text-transform: lowercase;
+    /* size compensation */
+    font-size: 1.2rem;
+}
+
+th{
+    text-transform: uppercase;
+}
+
+.button{
+    color: var(--color);
+    padding: 0.75rem 1.5rem;
+    border: 0.15rem solid var(--color);
+    margin-top: 1rem;
+}
+
+.error, .success{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-align: center;
+}
+
+.error, .del{
+    color: var(--red);
+
+}
+
+.success{
+    color: var(--color);
+    
+}
+
+.flex{
+    display: flex;
+    gap: 1rem;
+}
+
+
+/* PAGE ELEMENTS */
+footer{
+    padding-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    text-align: center;
+    background-color: var(--gray);
+}
+
+
+header{
+    height: 5rem;
+    overflow: hidden;
+    background-color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+.input-wrap{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+}
+
+.input-wrap label{
+    margin-bottom: 0.25rem;
+}
+
+#index-img{
+    position: absolute;
+    z-index: -10;
+    width: var(--margin);
+    max-width: 500px;
+    top: 0;
+    right: var(--margin);
+}
+
+main{
+    flex-grow: 1;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+nav{
+    display: flex;
+}
+
+nav > * {
+    padding: 0.75rem 1.25rem;
+    color: var(--black);
+    text-decoration: none;
+    border-bottom: 0.25rem solid vaR(--white);
+}
+
+nav > *:hover{
+    border-bottom: 0.25rem solid var(--color);
+}
+
+.solid{
+    background-color: var(--color);
+    color: var(--white);
+}
+
+/* title wrapper on login page */
+.login a{
+    height: 5rem;
+    display: block;
+    text-align: center;
+}
+
+#title{
+    height: 70%;
+}
+
+table{
+    width: 100%;
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+    border-radius: 0.5rem 0.5rem 0rem 0rem;
+    
+    overflow: hidden;
+
+    border-spacing:0;
+}
+
+tr{
+    display: flex;
+
+}
+
+tr:nth-child(1){
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    background-color: var(--color);
+    color: var(--white);
+}
+
+tr > *:first-child{
+    padding-left: 2rem;
+}
+
+tr >*:last-child{
+    padding-right: 2rem;
+}
+
+tr:not(:first-child):hover{
+    background-color: var(--colorLight);
+}
+
+td{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+tr > * {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+th{
+    text-align: left;
+}
+
+.age{
+    flex-basis: 3rem;
+    flex-grow: 0;
+}
+
+.note{
+    flex-grow: 2;
+}
+
+/* <FORM> STYLING */
+.login form{
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gray);
+    padding: 1rem;
+    padding-bottom: 3rem;
+
+}
+
+.login form h1{
+    text-align: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 20rem;
+    margin: auto;
+}
+
+form > *{
+    flex-grow: 1;
+}
+
+form button{
+    background-color: var(--color);
+    border: none;
+    padding: 0.75rem;
+    width: 100%;
+}
+
+form input{
+    padding: 0.5rem;
+    background-color: var(--gray);
+    outline: none;
+    border:none;
+
+}
